@@ -3,6 +3,9 @@ Gpredict is a real time satellite tracking and orbit prediction program
 for the Linux desktop. It uses the SGP4/SDP4 propagation algorithms together
 with NORAD two-line element sets (TLE).
 
+This is a fork adding OSC (Open Sound Control) output of some of the
+satellite's data from current module.
+
 Some core features of Gpredict include:
 
 - Tracking of a large number of satellites only limited by the physical
