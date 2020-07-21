@@ -207,7 +207,8 @@ sat_cfg_int_t   sat_cfg_int[SAT_CFG_INT_NUM] = {
     {"TLE", "AUTO_UPDATE_ACTION", 1},   /* notify, see tle_auto_upd_action_t */
     {"TLE", "LAST_UPDATE", 0},
     {"LOG", "CLEAN_AGE", 0},    /* 0 = Never clean */
-    {"LOG", "LEVEL", 2}
+    {"LOG", "LEVEL", 2},
+    {"GLOBAL", "OSC_PORT", 7770}
 };
 
 /** Array containing the string configuration values */

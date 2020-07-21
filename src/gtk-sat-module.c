@@ -694,7 +694,7 @@ static void gtk_sat_module_update_sat(gpointer key, gpointer val,
     /* ************************************************************************* */
     /* OSC Data */
     if (sat_cfg_get_bool(SAT_CFG_BOOL_SEND_OSC) == TRUE) {
-    lo_address t = lo_address_new(NULL, "7770");
+    lo_address t = lo_address_new(NULL, g_strdup_printf("%i", sat_cfg_get_int(SAT_CFG_INT_OSC_PORT)));
     if (lo_send(t, "/gpredict/sats", "sffff", sat->nickname, sat->az, sat->el, sat->alt, sat->velo) == -1)
         printf("OSC error %d: %s\n", lo_address_errno(t), lo_address_errstr(t));
     lo_address_free (t);

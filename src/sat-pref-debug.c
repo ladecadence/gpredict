@@ -35,6 +35,7 @@
 static GtkWidget *level;
 static GtkWidget *age;
 static GtkWidget *osccheck;
+static GtkWidget *oscport;
 
 static gboolean dirty = FALSE;
 static gboolean reset = FALSE;
@@ -80,7 +81,11 @@ void sat_pref_debug_ok()
         sat_cfg_set_int(SAT_CFG_INT_LOG_LEVEL,
                         gtk_combo_box_get_active(GTK_COMBO_BOX(level)));
 
+        /* send OSC? */
         sat_cfg_set_bool(SAT_CFG_BOOL_SEND_OSC, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (osccheck)));
+
+        /* OSC Port? */
+        sat_cfg_set_int(SAT_CFG_INT_OSC_PORT, gtk_spin_button_get_value(GTK_SPIN_BUTTON (oscport)));
 
         switch (num)
         {
@@ -246,11 +251,26 @@ GtkWidget      *sat_pref_debug_create()
                        FALSE, FALSE, 0);
 
     /* OSC */
+    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 10);
+    gtk_box_set_homogeneous(GTK_BOX(hbox), FALSE);
+
     osccheck = gtk_check_button_new_with_label(_("Send OSC messages"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(osccheck), sat_cfg_get_bool(SAT_CFG_BOOL_SEND_OSC));
-    gtk_box_pack_start (GTK_BOX (vbox), osccheck, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (hbox), osccheck, FALSE, FALSE, 0);
     g_signal_connect (G_OBJECT (osccheck), "clicked",
                         G_CALLBACK (state_change_cb), NULL);
+
+    label = gtk_label_new(_("OSC Port:"));
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+
+    oscport = gtk_spin_button_new_with_range(1024, 65535, 1);
+    gtk_spin_button_set_value (oscport, sat_cfg_get_int(SAT_CFG_INT_OSC_PORT));
+    gtk_box_pack_start(GTK_BOX(hbox), oscport, FALSE, FALSE, 0);
+
+    g_signal_connect (G_OBJECT (oscport), "value-changed",
+                        G_CALLBACK (state_change_cb), NULL);
+
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
     /* reset button */
     rbut = gtk_button_new_with_label(_("Reset"));
