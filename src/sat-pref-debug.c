@@ -80,6 +80,8 @@ void sat_pref_debug_ok()
         sat_cfg_set_int(SAT_CFG_INT_LOG_LEVEL,
                         gtk_combo_box_get_active(GTK_COMBO_BOX(level)));
 
+        sat_cfg_set_bool(SAT_CFG_BOOL_SEND_OSC, gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (osccheck)));
+
         switch (num)
         {
         case 1:
@@ -237,6 +239,11 @@ GtkWidget      *sat_pref_debug_create()
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
     g_free(msg);
+
+    /* separator */
+    gtk_box_pack_start(GTK_BOX(vbox),
+                       gtk_separator_new(GTK_ORIENTATION_HORIZONTAL),
+                       FALSE, FALSE, 0);
 
     /* OSC */
     osccheck = gtk_check_button_new_with_label(_("Send OSC messages"));
