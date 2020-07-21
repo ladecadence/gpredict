@@ -62,6 +62,14 @@ else
     havelibgps=false;
 fi
 
+# check for liblo (OSC)
+if pkg-config --atleast-version=0.31 liblo; then
+    CFLAGS="$CFLAGS `pkg-config --cflags liblo`"
+    LIBS="$LIBS `pkg-config --libs liblo`"
+else
+    AC_MSG_ERROR(Gpredict requires liblo-dev 0.31 or later)
+fi
+
 AC_SUBST(PACKAGE_CFLAGS)
 AC_SUBST(PACKAGE_LIBS)
 
