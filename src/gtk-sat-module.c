@@ -39,6 +39,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <sys/time.h>
+#include <lo/lo.h>
 
 #include "compat.h"
 #include "config-keys.h"
@@ -685,6 +686,20 @@ static void gtk_sat_module_update_sat(gpointer key, gpointer val,
         sat->los = find_los(sat, module->qth, daynum, maxdt);
 
     predict_calc(sat, module->qth, daynum);
+
+    /* ************************************************************************* */
+    /* ************************************************************************* */
+    /* ******************************* HACK ************************************ */
+    /* ************************************************************************* */
+    /* ************************************************************************* */
+    /* OSC Data */
+    if (sat_cfg_get_bool(SAT_CFG_BOOL_SEND_OSC) == TRUE) {
+    lo_address t = lo_address_new(NULL, "7770");
+    if (lo_send(t, "/gpredict/sats", "sffff", sat->nickname, sat->az, sat->el, sat->alt, sat->velo) == -1)
+        printf("OSC error %d: %s\n", lo_address_errno(t), lo_address_errstr(t));
+    lo_address_free (t);
+    }
+
 }
 
 /** Module timeout callback. */
