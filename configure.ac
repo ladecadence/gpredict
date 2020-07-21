@@ -103,6 +103,7 @@ GDK_V=`pkg-config --modversion gdk-3.0`
 GTK_V=`pkg-config --modversion gtk+-3.0`
 GOOC_V=`pkg-config --modversion goocanvas-2.0`
 CURL_V=`pkg-config --modversion libcurl`
+LIBLO_V=`pkg-config --modversion liblo`
 if test "$havelibgps" = true ; then
    GPS_V=`pkg-config --modversion libgps`
 fi
@@ -141,6 +142,7 @@ echo Gdk version........ : $GDK_V
 echo Gtk+ version....... : $GTK_V
 echo GooCanvas version.. : $GOOC_V
 echo Libcurl version.... : $CURL_V
+echo Liblo version...... : $LIBLO_V
 if test "$havelibgps" = true ; then
    echo Libgps version..... : $GPS_V
 fi
