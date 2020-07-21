@@ -34,6 +34,7 @@
 
 static GtkWidget *level;
 static GtkWidget *age;
+static GtkWidget *osccheck;
 
 static gboolean dirty = FALSE;
 static gboolean reset = FALSE;
@@ -236,6 +237,13 @@ GtkWidget      *sat_pref_debug_create()
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
     gtk_label_set_line_wrap(GTK_LABEL(label), TRUE);
     g_free(msg);
+
+    /* OSC */
+    osccheck = gtk_check_button_new_with_label(_("Send OSC messages"));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(osccheck), sat_cfg_get_bool(SAT_CFG_BOOL_SEND_OSC));
+    gtk_box_pack_start (GTK_BOX (vbox), osccheck, FALSE, FALSE, 0);
+    g_signal_connect (G_OBJECT (osccheck), "clicked",
+                        G_CALLBACK (state_change_cb), NULL);
 
     /* reset button */
     rbut = gtk_button_new_with_label(_("Reset"));
